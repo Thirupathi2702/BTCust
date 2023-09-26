@@ -1,0 +1,1497 @@
+using BTCAT.BusinessLogic.ClassLibrary.BusinessLogic.Labels.Print;
+using BTCAT.BusinessLogic.ClassLibrary.Labels;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Size = BTCAT.BusinessLogic.ClassLibrary.Labels.Size;
+
+namespace BTCAT.BusinessLogic.ClassLibrary.BusinessLogic.Labels
+{
+    public class LabelDataStructureStandard
+    {
+        static List<StandardLayout> _labelLayouts = null;
+        static List<LayoutContainer> _containers = null;
+        static LabelDataStructureStandard()
+        {
+            _labelLayouts = new List<StandardLayout>();
+            _labelLayouts.Clear();
+            _containers = new List<LayoutContainer>();
+            _containers.Clear();
+            InitializeContainers();
+
+        }
+        public static List<StandardLayout> GetAllLayouts()
+        {
+            _labelLayouts.Clear();
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "16up",
+                Height = 588,
+                Width = 375,
+                PaperHeight = 588,
+                PaperWidth = 375,
+                Containers = GetContainers("16up"),
+
+            });
+
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "20up",
+                Height = 590,
+                Width = 375,
+                PaperHeight = 590,
+                PaperWidth = 375,
+                Containers = GetContainers("20up"),
+            });
+
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "3up",
+                Height = 175,
+                Width = 375,
+                PaperHeight = 175,
+                PaperWidth = 375,
+                Containers = GetContainers("3up")
+            });
+
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "12up",
+                Height = 475,
+                Width = 375,
+                PaperHeight = 475,
+                PaperWidth = 375,
+                Containers = GetContainers("12up")
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = PrintDataConstants.PrintCategory.CLSSEPARATOR,
+                Height = 587,
+                Width = 375,
+                PaperHeight = 587,
+                PaperWidth = 375,
+                Containers = GetContainers(PrintDataConstants.PrintCategory.CLSSEPARATOR)
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = PrintDataConstants.PrintCategory.JBSEPARATOR,
+                Height = 587,
+                Width = 375,
+                PaperHeight = 587,
+                PaperWidth = 375,
+                Containers = GetContainers(PrintDataConstants.PrintCategory.JBSEPARATOR)
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = PrintDataConstants.PrintCategory.DMPSEPARATOR,
+                Height = 850,
+                Width = 1100,
+                PaperHeight = 850,
+                PaperWidth = 1100,
+                Containers = GetContainers(PrintDataConstants.PrintCategory.DMPSEPARATOR)
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = PrintDataConstants.PrintCategory.DONUT1UPSEPARATOR,
+                Height = 250,
+                Width = 187,
+                PaperHeight = 250,
+                PaperWidth = 187,
+                Containers = GetContainers(PrintDataConstants.PrintCategory.DONUT1UPSEPARATOR)
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = PrintDataConstants.PrintCategory.DONUT2UPSEPARATOR,
+                Height = 250,
+                Width = 375,
+                PaperHeight = 250,
+                PaperWidth = 375,
+                Containers = GetContainers(PrintDataConstants.PrintCategory.DONUT2UPSEPARATOR)
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "Donut1up",
+                Height = 250,
+                Width = 187,
+                PaperHeight = 250,
+                PaperWidth = 187,
+                Containers = GetContainers("Donut1upWBC"),
+                MetaInfo = "Donut1up"
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "Donut1up",
+                Height = 160,
+                Width = 160,
+                PaperHeight = 160,
+                PaperWidth = 160,
+                Containers = GetContainers("Donut1upNoBC"),
+                MetaInfo = "NoBC"
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "Donut1up",
+                Height = 160,
+                Width = 160,
+                PaperHeight = 160,
+                PaperWidth = 160,
+                Containers = GetContainers("Donut1upLabelObselute"),
+                MetaInfo = "OBSOL"
+            });
+            _labelLayouts.Add(new StandardLayout
+            {
+                LayoutType = "Donut2up",
+                Height = 250,
+                Width = 375,
+                PaperHeight = 250,
+                PaperWidth = 375,
+                Containers = GetContainers("Donut2upNoBC"),
+                MetaInfo = "Donut2up"
+            });
+            return _labelLayouts;
+        }
+
+        private static List<LayoutContainer> GetContainers(string layoutType)
+        {
+            return _containers.Where(container => container.Id.ToLower().Contains(layoutType.ToLower())).ToList();
+        }
+
+        private static void InitializeContainers()
+        {
+
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Control Label",
+                Text = "1",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Height = 50,
+                    Width = 375
+                },
+                ContainerName = "16_1",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Spine Label",
+                Text = "2",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Height = 125,
+                    Width = 125
+                },
+                ContainerName = "16_2",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Alpha1",
+                Text = "7",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 175
+                },
+                Size = new Size
+                {
+                    Height = 62.5f,
+                    Width = 75
+                },
+                ContainerName = "16_7",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Alpha2",
+                Text = "8",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 237.5f
+                },
+                Size = new Size
+                {
+                    Height = 62.5f,
+                    Width = 75
+                },
+                ContainerName = "16_8",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Library Name1",
+                Text = "15",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 300
+                },
+                Size = new Size
+                {
+                    Height = 68.75f,
+                    Width = 225
+                },
+                ContainerName = "16_15",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Library Name2",
+                Text = "16",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 368.75f
+                },
+                Size = new Size
+                {
+                    Height = 68.75f,
+                    Width = 225
+                },
+                ContainerName = "16_16",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Eye Readabele Barcode",
+                Text = "5",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 437.5f
+                },
+                Size = new Size
+                {
+                    Height = 37.5f,
+                    Width = 225
+                },
+                ContainerName = "16_5",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Misc 3",
+                Text = "14",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 475
+                },
+                Size = new Size
+                {
+                    Height = 75,
+                    Width = 225
+                },
+                ContainerName = "16_14",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Processing Note",
+                Text = "11",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 550
+                },
+                Size = new Size
+                {
+                    Height = 37.5f,
+                    Width = 275
+                },
+                ContainerName = "16_11",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Processing Notes",
+                Text = "13",
+                Location = new PointF
+                {
+                    X = 125,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Height = 75,
+                    Width = 250
+                },
+                ContainerName = "16_13",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "One Line Spine",
+                Text = "3",
+                Location = new PointF
+                {
+                    X = 125,
+                    Y = 125
+                },
+                Size = new Size
+                {
+                    Height = 50,
+                    Width = 250
+                },
+                ContainerName = "16_3",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Bib Label",
+                Text = "4",
+                Location = new PointF
+                {
+                    X = 75,
+                    Y = 175
+                },
+                Size = new Size
+                {
+                    Height = 125,
+                    Width = 300
+                },
+                ContainerName = "16_4",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Ownership",
+                Text = "10",
+                Location = new PointF
+                {
+                    X = 275,
+                    Y = 300
+                },
+                Size = new Size
+                {
+                    Height = 250,
+                    Width = 100
+                },
+                ContainerName = "16_10",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Branch",
+                Text = "6",
+                Location = new PointF
+                {
+                    X = 225,
+                    Y = 300
+                },
+                Size = new Size
+                {
+                    Height = 125,
+                    Width = 50
+                },
+                ContainerName = "16_6",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Genre",
+                Text = "9",
+                Location = new PointF
+                {
+                    X = 225,
+                    Y = 425
+                },
+                Size = new Size
+                {
+                    Height = 125,
+                    Width = 50
+                },
+                ContainerName = "16_9",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "16up",
+                Description = "Misc 1",
+                Text = "12",
+                Location = new PointF
+                {
+                    X = 275,
+                    Y = 550
+                },
+                Size = new Size
+                {
+                    Height = 37.5f,
+                    Width = 100
+                },
+                ContainerName = "16_12",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "12",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Height = 59.05f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_12",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "20",
+                Location = new PointF
+                {
+                    X = 98.42f,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Height = 59.05f,
+                    Width = 275.59f
+                },
+                ContainerName = "20_20",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "1",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 59.05f
+                },
+                Size = new Size
+                {
+                    Height = 59.05f,
+                    Width = 374.01f
+                },
+                ContainerName = "20_1",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "4",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 118.1f
+                },
+                Size = new Size
+                {
+                    Height = 78.74f,
+                    Width = 374.01f
+                },
+                ContainerName = "20_4",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "2",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 196.84f
+                },
+                Size = new Size
+                {
+                    Height = 125.98f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_2",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "13",
+                Location = new PointF
+                {
+                    X = 98.42f,
+                    Y = 196.84f
+                },
+                Size = new Size
+                {
+                    Height = 98.42f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_13",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "8",
+                Location = new PointF
+                {
+                    X = 196.84f,
+                    Y = 196.84f
+                },
+                Size = new Size
+                {
+                    Height = 98.42f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_8",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "7",
+                Location = new PointF
+                {
+                    X = 295.26f,
+                    Y = 196.84f
+                },
+                Size = new Size
+                {
+                    Height = 78.74f,
+                    Width = 78.74f
+                },
+                ContainerName = "20_7",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "14",
+                Location = new PointF
+                {
+                    X = 295.27f,
+                    Y = 275.58f
+                },
+                Size = new Size
+                {
+                    Height = 78.74f,
+                    Width = 78.74f
+                },
+                ContainerName = "20_14",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "3",
+                Location = new PointF
+                {
+                    X = 98.42f,
+                    Y = 295.26f
+                },
+                Size = new Size
+                {
+                    Height = 47.24f,
+                    Width = 196.85f
+                },
+                ContainerName = "20_3",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "9",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 322.81f
+                },
+                Size = new Size
+                {
+                    Height = 59.05f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_9",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "19",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 381.86f
+                },
+                Size = new Size
+                {
+                    Height = 27.55f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_19",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "5",
+                Location = new PointF
+                {
+                    X = 98.42f,
+                    Y = 342.5f
+                },
+                Size = new Size
+                {
+                    Height = 66.92f,
+                    Width = 196.85f
+                },
+                ContainerName = "20_5",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "17",
+                Location = new PointF
+                {
+                    X = 295.27f,
+                    Y = 354.32f
+                },
+                Size = new Size
+                {
+                    Height = 78.74f,
+                    Width = 78.74f
+                },
+                ContainerName = "20_17",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "10",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 409.42f
+                },
+                Size = new Size
+                {
+                    Height = 157.48f,
+                    Width = 196.85f
+                },
+                ContainerName = "20_10",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "6",
+                Location = new PointF
+                {
+                    X = 196.85f,
+                    Y = 409.42f
+                },
+                Size = new Size
+                {
+                    Height = 157.48f,
+                    Width = 59.05f
+                },
+                ContainerName = "20_6",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "16",
+                Location = new PointF
+                {
+                    X = 275.81f,
+                    Y = 566.9f
+                },
+                Size = new Size
+                {
+                    Height = 47.24f,
+                    Width = 98.42f
+                },
+                ContainerName = "20_16",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "18",
+                Location = new PointF
+                {
+                    X = 259.847f,
+                    Y = 414.341f
+                },
+                Size = new Size
+                {
+                    Height = 145.66f,
+                    Width = 31.49f
+                },
+                ContainerName = "20_18",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "11",
+                Location = new PointF
+                {
+                    X = 295.27f,
+                    Y = 433.06f
+                },
+                Size = new Size
+                {
+                    Height = 133.85f,
+                    Width = 78.74f
+                },
+                ContainerName = "20_11",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "20up",
+                Text = "15",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 566.9f
+                },
+                Size = new Size
+                {
+                    Height = 47.42f,
+                    Width = 275.57f
+                },
+                ContainerName = "20_15",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "3up",
+                Text = "control label",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Width = 375,
+                    Height = 50
+                },
+                ContainerName = "S0",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "3up",
+                Text = "Spine label",
+
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 125,
+                    Height = 125
+                },
+                ContainerName = "S12",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "3up",
+                Text = "custom label",
+                Location = new PointF
+                {
+                    X = 125,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 250,
+                    Height = 125
+                },
+                ContainerName = "S13",
+            });
+
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "control label",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Width = 375,
+                    Height = 50
+                },
+                ContainerName = "S0",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "spine label",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 125,
+                    Height = 125
+                },
+                ContainerName = "S1",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "bibiliographic label",
+                Location = new PointF
+                {
+                    X = 125,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 250,
+                    Height = 100
+                },
+                ContainerName = "S2",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "branch label",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 175
+                },
+                Size = new Size
+                {
+                    Width = 125,
+                    Height = 75
+                },
+                ContainerName = "S3",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "ownership label",
+                Location = new PointF
+                {
+                    X = 125,
+                    Y = 150
+                },
+                Size = new Size
+                {
+                    Width = 250,
+                    Height = 100
+                },
+                ContainerName = "S4",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "large bar code",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 250
+                },
+                Size = new Size
+                {
+                    Width = 300,
+                    Height = 100
+                },
+                ContainerName = "S5",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "Lexile label",
+                Location = new PointF
+                {
+                    X = 300,
+                    Y = 250
+                },
+                Size = new Size
+                {
+                    Width = 75,
+                    Height = 50
+                },
+                ContainerName = "S6",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "genre label",
+                Location = new PointF
+                {
+                    X = 300,
+                    Y = 300
+                },
+                Size = new Size
+                {
+                    Width = 75,
+                    Height = 50
+                },
+                ContainerName = "S7",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "long spine label",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 350
+                },
+                Size = new Size
+                {
+                    Width = 200,
+                    Height = 50
+                },
+                ContainerName = "S8",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "eye readable bar code",
+                Location = new PointF
+                {
+                    X = 200,
+                    Y = 350
+                },
+                Size = new Size
+                {
+                    Width = 175,
+                    Height = 50
+                },
+                ContainerName = "S9",
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "tiny bar code",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 400
+                },
+                Size = new Size
+                {
+                    Width = 250,
+                    Height = 75
+                },
+                ContainerName = "S10",
+            });
+
+            _containers.Add(new LayoutContainer
+            {
+                Id = "12up",
+                Text = "extra label",
+                Location = new PointF
+                {
+                    X = 250,
+                    Y = 400
+                },
+                Size = new Size
+                {
+                    Width = 125,
+                    Height = 75
+                },
+                ContainerName = "S11",
+            });
+
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "CustomerName",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 2
+                },
+                Size = new Size
+                {
+                    Width = 356.625f,
+                    Height = 50
+                },
+                ContainerName = "CustomerName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "AccountName",
+                Location = new PointF
+                {
+                    X = 3,
+                    Y = 52
+                },
+                Size = new Size
+                {
+                    Width = 356.625f,
+                    Height = 50
+                },
+                ContainerName = "AccountName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "ControlLabel",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 102
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 60
+                },
+                ContainerName = "ControlLabel"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "Container",
+                Location = new PointF
+                {
+                    X = 200,
+                    Y = 102
+                },
+                Size = new Size
+                {
+                    Width = 158,
+                    Height = 25
+                },
+                ContainerName = "Container"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "Instructions",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 162
+                },
+                Size = new Size
+                {
+                    Width = 340,
+                    Height = 140
+                },
+                ContainerName = "Instructions"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "CLSSeparator",
+                Text = "PublicNote",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 302
+                },
+                Size = new Size
+                {
+                    Width = 340,
+                    Height = 250
+                },
+                ContainerName = "PublicNote"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "JBSeparator",
+                Text = "customername",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 40
+                },
+                ContainerName = "CustomerName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "JBSeparator",
+                Text = "controllabel",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 46
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 56
+                },
+                ContainerName = "ControlLabel"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "JBSeparator",
+                Text = "publicnote",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 106
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 420
+                },
+                ContainerName = "PublicNote"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "JBSeparator",
+                Text = "instructions",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 532
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 35
+                },
+                ContainerName = "Instructions"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upSeparator",
+                Text = "customername",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Width = 187,
+                    Height = 68
+                },
+                ContainerName = "CustName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upSeparator",
+                Text = "controllabel",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 68
+                },
+                Size = new Size
+                {
+                    Width = 187,
+                    Height = 50
+                },
+                ContainerName = "ControlLabel"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upSeparator",
+                Text = "container",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 158
+                },
+                Size = new Size
+                {
+                    Width = 187,
+                    Height = 50
+                },
+                ContainerName = "ContainerNumber"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "DMPSeparator",
+                Text = "customername",
+                Location = new PointF
+                {
+                    X = 34,
+                    Y = 17
+                },
+                Size = new Size
+                {
+                    Width = 356.25f,
+                    Height = 50
+                },
+                ContainerName = "CustomerName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "DMPSeparator",
+                Text = "container",
+                Location = new PointF
+                {
+                    X = 422,
+                    Y = 24
+                },
+                Size = new Size
+                {
+                    Width = 220f,
+                    Height = 30f
+                },
+                ContainerName = "Container"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "DMPSeparator",
+                Text = "controllabel",
+                Location = new PointF
+                {
+                    X = 34,
+                    Y = 74
+                },
+                Size = new Size
+                {
+                    Width = 356.25f,
+                    Height = 50
+                },
+                ContainerName = "ControlLabel"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "DMPSeparator",
+                Text = "instructions",
+                Location = new PointF
+                {
+                    X = 38,
+                    Y = 132
+                },
+                Size = new Size
+                {
+                    Width = 734f,
+                    Height = 47
+                },
+                ContainerName = "ProcessingNotes"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "DMPSeparator",
+                Text = "publicnote",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 185
+                },
+                Size = new Size
+                {
+                    Width = 815,
+                    Height = 826
+                },
+                ContainerName = "PublicNote"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upSeparator",
+                Text = "customername",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 2
+                },
+                Size = new Size
+                {
+                    Width = 356.25f,
+                    Height = 50
+                },
+                ContainerName = "Cust_Customer Name"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upSeparator",
+                Text = "controllabel",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 59
+                },
+                Size = new Size
+                {
+                    Width = 374,
+                    Height = 59
+                },
+                ContainerName = "Label_lbl1_Value"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upSeparator",
+                Text = "container",
+                Location = new PointF
+                {
+                    X = 75,
+                    Y = 144
+                },
+                Size = new Size
+                {
+                    Width = 211.46f,
+                    Height = 50
+                },
+                ContainerName = "ATS_ContainerID"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upWBC",
+                Text = "customername",
+                Location = new PointF
+                {
+                    X = 9,
+                    Y = 15
+                },
+                Size = new Size
+                {
+                    Width = 170.83f,
+                    Height = 14.58f
+                },
+                ContainerName = "CustomerName"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upWBC",
+                Text = "barcodedata",
+                Location = new PointF
+                {
+                    X = 10,
+                    Y = 30
+                },
+                Size = new Size
+                {
+                    Width = 170.83f,
+                    Height = 42.71f
+                },
+                ContainerName = "BarcodeData"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upNoBC",
+                Text = "volume",
+                Location = new PointF
+                {
+                    X = 2,
+                    Y = 64
+                },
+                Size = new Size
+                {
+                    Width = 157.71f,
+                    Height = 25
+                },
+                ContainerName = "Volumes"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upNoBC",
+                Text = "lbl5",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 119
+                },
+                Size = new Size
+                {
+                    Width = 160,
+                    Height = 22.42f
+                },
+                ContainerName = "label5value"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upLabelObselute",
+                Text = "volume",
+                Location = new PointF
+                {
+                    X = 2,
+                    Y = 64
+                },
+                Size = new Size
+                {
+                    Width = 157.71f,
+                    Height = 25
+                },
+                ContainerName = "label5value"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut1upLabelObselute",
+                Text = "lbl5",
+                Location = new PointF
+                {
+                    X = 0,
+                    Y = 119
+                },
+                Size = new Size
+                {
+                    Width = 160,
+                    Height = 22.42f
+                },
+                ContainerName = "label5value"
+            });
+
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upNoBC",
+                Text = "Control label",
+                Location = new PointF
+                {
+                    X = 7,
+                    Y = 0
+                },
+                Size = new Size
+                {
+                    Width = 172.5f,
+                    Height = 50
+                },
+                ContainerName = "Control label"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upNoBC",
+                Text = "IP_Text1",
+                Location = new PointF
+                {
+                    X = 15,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 25.83f,
+                    Height = 22.92f
+                },
+                ContainerName = "volume"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upNoBC",
+                Text = "IP_Text2",
+                Location = new PointF
+                {
+                    X = 41,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 16.67f,
+                    Height = 22.92f
+                },
+                ContainerName = "of"
+            });
+            _containers.Add(new LayoutContainer
+            {
+                Id = "Donut2upNoBC",
+                Text = "IP_Text3",
+                Location = new PointF
+                {
+                    X = 58,
+                    Y = 50
+                },
+                Size = new Size
+                {
+                    Width = 19.79f,
+                    Height = 22.92f
+                },
+                ContainerName = "volumes"
+            });
+        }
+    }
+}
